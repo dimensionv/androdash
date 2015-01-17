@@ -39,6 +39,7 @@
 package de.dimensionv.android.widget.dashboardlayout;
 
 import android.graphics.drawable.Drawable;
+import android.view.View;
 
 /**
  * This interface is the base for all items displayed by the DashboardLayout. All operations with
@@ -48,8 +49,23 @@ import android.graphics.drawable.Drawable;
  * an ID for internal identification and usage.
  *
  * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
-public interface DashboardItem {
+public interface DashboardItem extends View.OnClickListener {
+
+  /**
+   * <p>Public internal interface for onClick-events.</p>
+   * This interface is used to transform a {@link View.OnClickListener} event into a
+   * {@code DashboardItem.OnClickListener} event.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
+   */
+  public interface OnClickListener {
+    public void onClick(DashboardItem item);
+  }
+
   /**
    * Returns the drawable object of the item. This can be either an icon or some other kind of
    * graphical representation. If necessary, this method has to check the enabled-state in order to
@@ -58,14 +74,20 @@ public interface DashboardItem {
    * a disabled looks.
    *
    * @return The item's drawable object
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public Drawable getIconDrawable();
 
   /**
    * Returns the text to be displayed under the drawable object returned by the
-   * <code>getIconDrawable()</code> method. (Think of it as a name/label)
+   * {@code getIconDrawable()} method. (Think of it as a name/label)
    *
    * @return The item's label
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public CharSequence getText();
 
@@ -73,29 +95,58 @@ public interface DashboardItem {
    * Returns the ID associated with the item. It's the items unique identifier, and you are free to
    * use any kind of number best suited to your case.
    * <p/>
-   * Please note: this ID will be used as the actual button's ID by a cast to <code>int</code>.
+   * Please note: this ID will be used as the actual button's ID by a cast to {@code int}.
    *
    * @return the item' ID.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public long getID();
 
   /**
-   * Sets the state of the DashboardItem. The state can be either <code>true</code>, which means the
-   * item is enabled (active and clickable), or <code>false</code>, which means the item is disabled
+   * Sets the state of the DashboardItem. The state can be either {@code true}, which means the
+   * item is enabled (active and clickable), or {@code false}, which means the item is disabled
    * (neither active nor clickable).
    *
    * @param state
-   *     <code>true</code> for enabled, <code>false</code> for disabled state.
+   *     {@code true} for enabled, {@code false} for disabled state.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public void setEnabled(boolean state);
 
   /**
-   * Returns the current state of the DashboardItem. <code>true</code> for an enabled state,
-   * <code>false</code> otherwise.
+   * Returns the current state of the DashboardItem. {@code true} for an enabled state,
+   * {@code false} otherwise.
    *
-   * @return <code>true</code> for enabled, <code>false</code> for disabled state.
+   * @return {@code true} for enabled, {@code false} for disabled state.
    *
    * @see DashboardItem#setEnabled
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public boolean isEnabled();
+
+  /**
+   * Checks whether this {@code DashboardItem} has a {@link DashboardItem.OnClickListener} set or not.
+   *
+   * @return True if a {@code DashboardItem.OnClickListener} is set, false otherwise.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
+   */
+  public boolean hasOnClickListener();
+
+  /**
+   * Sets a {@link DashboardItem.OnClickListener} for this {@code DashboardItem}.
+   *
+   * @param listener The {@code DashboardItem.OnClickListener} for this {@code DashboardItem}.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
+   */
+  public void setOnClickListener(OnClickListener listener);
 }

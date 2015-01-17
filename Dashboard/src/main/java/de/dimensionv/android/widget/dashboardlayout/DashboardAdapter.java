@@ -53,6 +53,8 @@ import java.util.List;
  * from DashboardItem. This class is a direct extension of Android's BaseAdapter class.
  *
  * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  * @see android.widget.BaseAdapter
  * @see de.dimensionv.android.widget.dashboardlayout.DashboardItem
  */
@@ -69,6 +71,9 @@ public class DashboardAdapter <T extends DashboardItem> extends BaseAdapter {
    * @see java.util.List
    * @see android.view.LayoutInflater
    * @see android.view.View.OnClickListener
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public DashboardAdapter(List<T> items, LayoutInflater inflater, OnClickListener onClickListener) {
     super();
@@ -83,6 +88,9 @@ public class DashboardAdapter <T extends DashboardItem> extends BaseAdapter {
    * @return Number of elements
    *
    * @see android.widget.Adapter#getCount()
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   @Override
   public int getCount() {
@@ -107,6 +115,9 @@ public class DashboardAdapter <T extends DashboardItem> extends BaseAdapter {
    * @return ID of the requested item.
    *
    * @see android.widget.Adapter#getItemId(int)
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   @SuppressWarnings("unchecked")
   @Override
@@ -122,6 +133,9 @@ public class DashboardAdapter <T extends DashboardItem> extends BaseAdapter {
    * populated.
    *
    * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
@@ -139,7 +153,7 @@ public class DashboardAdapter <T extends DashboardItem> extends BaseAdapter {
     button.setText(item.getText());
     button.setCompoundDrawablesWithIntrinsicBounds(null, item.getIconDrawable(), null, null);
     button.setEnabled(item.isEnabled());
-    button.setOnClickListener(onClickListener);
+    button.setOnClickListener(item.hasOnClickListener() ? item : onClickListener);
 
     return button;
   }
@@ -148,6 +162,9 @@ public class DashboardAdapter <T extends DashboardItem> extends BaseAdapter {
    * Returns the list of items in this adapter.
    *
    * @return list of items
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public List<T> getList() {
     return items;

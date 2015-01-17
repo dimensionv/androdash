@@ -50,6 +50,8 @@ import android.view.ViewGroup;
  * an ID for internal identification and usage.
  *
  * @author Volkmar Seifert
+ * @version 1.0
+ * @since API 1.0.0
  */
 public class DashboardLayout extends ViewGroup {
 
@@ -62,14 +64,41 @@ public class DashboardLayout extends ViewGroup {
   private int desiredRows = 0;
   private DashboardDataSetObserver observer = null;
 
+  /**
+   * Creates a new {@code DashboardLayout} object and the given {link Context}-object.
+   *
+   * @param context The {@code Context} object
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
+   */
   public DashboardLayout(Context context) {
     super(context);
   }
 
+  /**
+   * Creates a new {@code DashboardLayout} object and the given {link Context}-object.
+   *
+   * @param context The {@code Context} object
+   * @param attrs Attributes for the new {@code DashboardLayout}.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
+   */
   public DashboardLayout(Context context, AttributeSet attrs) {
     super(context, attrs);
   }
 
+  /**
+   * Creates a new {@code DashboardLayout} object and the given {link Context}-object.
+   *
+   * @param context The {@code Context} object
+   * @param attrs Attributes for the new {@code DashboardLayout}.
+   * @param defStyle The style for this new {@code DashboardLayout}.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
+   */
   public DashboardLayout(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
   }
@@ -88,6 +117,9 @@ public class DashboardLayout extends ViewGroup {
    * @param heightMeasureSpec
    *     vertical space requirements as imposed by the parent. The requirements are encoded with
    *     View.MeasureSpec.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   @Override
   protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -149,6 +181,9 @@ public class DashboardLayout extends ViewGroup {
    * within the availabe / assigned area of this layout.
    *
    * @see android.view.ViewGroup#onLayout(boolean, int, int, int, int)
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   @Override
   protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -287,6 +322,9 @@ public class DashboardLayout extends ViewGroup {
    *     Number of visible objects
    *
    * @return The number of rows.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   private int computeRows(int cols, int visibleCount) {
     return ((visibleCount - 1) / cols) + 1;
@@ -296,6 +334,9 @@ public class DashboardLayout extends ViewGroup {
    * Sets the adapter containing the items for the dashboard.
    *
    * @param adapter
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public void setAdapter(DashboardAdapter<? extends DashboardItem> adapter) {
     this.adapter = adapter;
@@ -306,6 +347,9 @@ public class DashboardLayout extends ViewGroup {
   /**
    * Populates the view with the items of the adapter provided through the <code>setAdapter</code>
    * method.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public void populateFromAdapter() {
     int count = adapter.getCount();
@@ -326,6 +370,9 @@ public class DashboardLayout extends ViewGroup {
    * Returns the number of columns desired
    *
    * @return the number of desired columns
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public int getDesiredCols() {
     return desiredCols;
@@ -340,6 +387,9 @@ public class DashboardLayout extends ViewGroup {
    *
    * @param desiredCols
    *     the number of columns desired
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public void setDesiredCols(int desiredCols) {
     this.desiredCols = desiredCols;
@@ -349,6 +399,9 @@ public class DashboardLayout extends ViewGroup {
    * Returns the number of rows desired
    *
    * @return the number of desired rows
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public int getDesiredRows() {
     return desiredRows;
@@ -363,6 +416,9 @@ public class DashboardLayout extends ViewGroup {
    *
    * @param desiredRows
    *     the number of rows desired
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   public void setDesiredRows(int desiredRows) {
     this.desiredRows = desiredRows;
@@ -375,6 +431,9 @@ public class DashboardLayout extends ViewGroup {
    * method.
    *
    * @return the observer-instance of this DashboardLayout-object.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
    */
   private DashboardDataSetObserver getObserver() {
     if(observer == null) {

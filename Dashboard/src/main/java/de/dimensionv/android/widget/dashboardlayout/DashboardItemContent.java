@@ -2,8 +2,7 @@
 //
 // Author: Volkmar Seifert
 // Description:
-// This class implements the DataSetObserver-functionality and updates the
-// DashboardLayout accordingly if called.
+// Interface for a dashboard content item.
 //
 // ////////////////////////////////////////////////////////////////////////////
 // License:
@@ -38,57 +37,48 @@
 // ////////////////////////////////////////////////////////////////////////////
 package de.dimensionv.android.widget.dashboardlayout;
 
-import android.database.DataSetObserver;
+import android.graphics.drawable.Drawable;
 
 /**
- * This class implements the DataSetObserver-functionality and updates the DashboardLayout
- * accordingly if called.
- * <p/>
- * It's use is completely internal, and you shouldn' need to bother with it.
- * <p/>
- * It receives callbacks when a data set has been changed, or made invalid in the DashboardAdapter.
- * It is a direct extension of the <code>android.database.DataSetObserver</code> class.
+ * <p>This interface should be used for all content-objects passed to the {@link ContainerDashboardItem}.</p>
+ * <p>If a content-object implements this interface, it can be used to automatically feed the information
+ * necessary to create a {@link DashboardItem}.</p>
  *
  * @author Volkmar Seifert
  * @version 1.0
  * @since API 1.0.0
  */
-public class DashboardDataSetObserver extends DataSetObserver {
-  private DashboardLayout layout;
-
+public interface DashboardItemContent {
   /**
-   * Creates an {@code DashboardDataSetObserver} object. It is mandatory to assign a proper existing
-   * {@link DashboardLayout} here.
-   *
-   * @param layout The {@code DashboardLayout} object.
+   * Returns the ID for the {@link DashboardItem}.
+   * @return The ID for the {@link DashboardItem}.
    *
    * @since Class 1.0
    * @since API 1.0.0
    */
-  public DashboardDataSetObserver(DashboardLayout layout) {
-    this.layout = layout;
-  }
-
+  long getID();
   /**
-   * This method is called when the entire data set has changed.
+   * Returns the text to be displayed in the {@link DashboardLayout}.
+   * @return The text to be displayed in the {@link DashboardLayout}.
    *
    * @since Class 1.0
    * @since API 1.0.0
    */
-  @Override
-  public void onChanged() {
-    layout.removeAllViews();
-    layout.populateFromAdapter();
-  }
-
+  String getText();
   /**
-   * This method is called when the entire data becomes invalid.
+   * Returns the {@link Drawable}-object of the icon for the {@code enabled == true} state.
+   * @return The {@code Drawable}-object of the icon.
    *
    * @since Class 1.0
    * @since API 1.0.0
    */
-  @Override
-  public void onInvalidated() {
-    layout.removeAllViews();
-  }
+  Drawable getIconDrawableEnabled();
+  /**
+   * Returns the {@link Drawable}-object of the icon for the {@code enabled == false} state.
+   * @return The {@code Drawable}-object of the icon.
+   *
+   * @since Class 1.0
+   * @since API 1.0.0
+   */
+  Drawable getIconDrawableDisabled();
 }

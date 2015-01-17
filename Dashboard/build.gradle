@@ -1,23 +1,83 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion "20.0.0"
-    defaultConfig {
-        applicationId "de.dimensionv.android.widget.dashboardlayout"
-        minSdkVersion 8
-        targetSdkVersion 20
+
+    def versionPropsFile = file('version.properties')
+
+    def majorVersionCode = 0
+    def minorVersionCode = 0
+    def hotfixVersionCode = 0
+    def buildNr = 1
+    def snapshotBuild = true;
+    def versionString
+
+    def Properties versionProps = new Properties()
+
+    if(versionPropsFile.canRead()) {
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+        majorVersionCode = versionProps['MAJOR'].toInteger()
+        minorVersionCode = versionProps['MINOR'].toInteger()
+        hotfixVersionCode = versionProps['HOTFIX'].toInteger()
+
+        buildNr = versionProps['BUILD_NUMBER'].toInteger() + 1
+
+        snapshotBuild = versionProps['SNAPSHOT_BUILD'].toBoolean()
+
+        versionProps['BUILD_NUMBER'] = buildNr.toString()
+    } else {
+        versionProps['MAJOR'] = majorVersionCode.toString()
+        versionProps['MINOR'] = minorVersionCode.toString()
+        versionProps['HOTFIX'] = minorVersionCode.toString()
+        versionProps['BUILD_NUMBER'] = buildNr.toString()
+        versionProps['SNAPSHOT_BUILD'] = snapshotBuild.toString()
     }
+
+    versionProps.store(versionPropsFile.newWriter(), null)
+
+    versionString = String.format("%d.%d.%d", majorVersionCode, minorVersionCode, hotfixVersionCode)
+
+    allprojects {
+        version = versionString
+        ext.snapshotBuild = snapshotBuild
+    }
+
+    compileSdkVersion ANDROID_BUILD_COMPILE_SDK_VERSION.toInteger()
+    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
+
+    //publishNonDefault true
+
+    defaultConfig {
+        versionCode buildNr
+        versionName versionString
+        minSdkVersion ANDROID_BUILD_MIN_SDK_VERSION.toInteger()
+        targetSdkVersion ANDROID_BUILD_TARGET_SDK_VERSION.toInteger()
+    }
+
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            minifyEnabled false
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            debuggable false
+            jniDebuggable false
+            renderscriptDebuggable false
+            zipAlignEnabled true
+        }
+        debug {
+            minifyEnabled false
+            debuggable true
+            versionNameSuffix '-SNAPSHOT'
+            zipAlignEnabled true
         }
     }
-    productFlavors {
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_6
+        targetCompatibility JavaVersion.VERSION_1_6
     }
 }
 
 dependencies {
-    provided 'com.android.support:support-v4:20.0.0'
+    compile 'com.android.support:support-v4:21.0.3'
 }
+
+apply from: '../mavenPush.gradle'
